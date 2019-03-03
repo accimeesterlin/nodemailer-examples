@@ -1,7 +1,6 @@
+# Send email with Mailgun + Nodemailer
 
-# Send email templates with Nodemailer + Handlebars
-
-How to send an email template with Nodemailer + handlebars
+How to send emails with MailGun + Nodemailer
 
 Prerequisite:
 - Nodejs (Installed)
@@ -16,29 +15,26 @@ Create a file named `.env`, and copy everything inside the `.env-example` file t
 
 
 #### Step 2
-We need to define our nodemailer transporter to connect to our service. Make sure you fill in with your credentials such as `email` and `password`.
+We need to define our nodemailer transporter to connect to our mailgun service. Make sure you fill `api_key` and `domain`.
 ```
-let transporter = nodemailer.createTransport({
-    service: 'gmail',
+const mailGun = require('nodemailer-mailgun-transport');
+
+const auth = {
     auth: {
-        user: process.env.EMAIL || 'abc@gmail.com', 
-        pass: process.env.PASSWORD || '1234'
+        api_key: process.env.API_KEY,
+        domain: process.env.DOMAIN
     }
-});
+};
+
+const transporter = nodemailer.createTransport(mailGun(auth));
 ```
 
 
 #### Step 3
-Register the `nodemailer-handlebars` plugins to nodemailer.
+In order to obtain the `apiKey` and `domain`. Navigate to [MailGun](https://mailgun.com). Create an account if you don't have one, scroll all the way down in the dashboard page, you should see your `Private Api Key` below. 
 
-```
-transporter.use('compile', hbs({
-    viewEngine: 'express-handlebars',
-    viewPath: './views/'
-}));
+![MailGun Screenshot](./public/images/apiKey_and_domain.png)
 
-
-```
 
 #### Step 4
 Define a `mailOptions` variable. It should contains information that your receiver should know about it. Make sure you specify the template you'd like to send under the `template` property inside mailoptions object. Use the context to send extra data to your templates. 
@@ -48,11 +44,7 @@ let mailOptions = {
     from: 'abc@gmail.com', 
     to: 'cba@gmail.com',
     subject: 'Nodemailer - Test',
-    text: 'Wooohooo it works!!',
-    template: 'index',
-    context: {
-        name: 'Accime Esterling'
-    }
+    text: 'Wooohooo it works!!'
 };
 ```
 

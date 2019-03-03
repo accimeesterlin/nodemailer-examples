@@ -1,7 +1,8 @@
 
-# Send email templates with Nodemailer + Handlebars
 
-How to send an email template with Nodemailer + handlebars
+# Send email with Gmail - Nodemailer
+
+How to send an email with your personal gmail account using Nodemailer
 
 Prerequisite:
 - Nodejs (Installed)
@@ -29,35 +30,18 @@ let transporter = nodemailer.createTransport({
 
 
 #### Step 3
-Register the `nodemailer-handlebars` plugins to nodemailer.
-
-```
-transporter.use('compile', hbs({
-    viewEngine: 'express-handlebars',
-    viewPath: './views/'
-}));
-
-
-```
-
-#### Step 4
-Define a `mailOptions` variable. It should contains information that your receiver should know about it. Make sure you specify the template you'd like to send under the `template` property inside mailoptions object. Use the context to send extra data to your templates. 
-
+Define a `mailOptions` variable. It should contains information that your receiver should know about it. 
 ```
 let mailOptions = {
     from: 'abc@gmail.com', 
     to: 'cba@gmail.com',
     subject: 'Nodemailer - Test',
-    text: 'Wooohooo it works!!',
-    template: 'index',
-    context: {
-        name: 'Accime Esterling'
-    }
+    text: 'Wooohooo it works!!'
 };
 ```
 
 
-#### Step 5
+#### Step 4
 In order to send an email with nodemailer, we need to bring the transporter that we previously configured above, and invoke the `sendMail` function. If everything goes well, you should receive an email.
 ```
 transporter.sendMail(mailOptions, (err, data) => {
