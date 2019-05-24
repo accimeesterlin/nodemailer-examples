@@ -1,43 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <form>
-        <input type="text" id="subject" placeholder="Subject"> <br>
-        <input type="email" id="email" placeholder="Email"> <br>
-        <textarea name="text" id="text" cols="30" rows="10"></textarea> <br>
-        <input type="submit" value="Submit">
+      <input type="text" id="subject" placeholder="Subject" /> <br />
+      <input type="email" id="email" placeholder="Receiver email" /> <br />
+      <textarea name="text" id="text" cols="30" rows="10"></textarea> <br />
+      <input type="submit" value="Submit" />
     </form>
-
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
-        $('form').on('submit', (e) => {
-            e.preventDefault();
+      $("form").on("submit", e => {
+        e.preventDefault();
 
-            const email = $('#email').val().trim();
-            const subject = $('#subject').val().trim();
-            const text = $('#text').val().trim();
+        const email = $("#email")
+          .val()
+          .trim();
+        const subject = $("#subject")
+          .val()
+          .trim();
+        const text = $("#text")
+          .val()
+          .trim();
 
-            const data = {
-                email,
-                subject,
-                text
-            };
+        const data = {
+          email,
+          subject,
+          text
+        };
 
-            $.post('/email', data, function() {
-                console.log('Server received our data');
-            });
-
-        });;
+        $.post("/email", data)
+          .then(() => {
+            window.location.href = "/email/sent";
+          })
+          .catch(() => {
+            window.location.href = "/error";
+          });
+      });
     </script>
-</body>
-
+  </body>
 </html>
