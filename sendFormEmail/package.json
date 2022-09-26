@@ -14,6 +14,6 @@
     "dotenv": "^8.0.0",
     "express": "^4.16.4",
     "nodemailer": "^5.1.1",
-    "nodemailer-mailgun-transport": "^1.4.0"
+    "nodemailer-mailgun-transport": "^2.1.5"
   }
 }
